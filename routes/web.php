@@ -36,5 +36,5 @@ Route::group(['prefix' => 'api/v1'], function() {
         Route::delete('{id}', 'User\UserController@destroy');
     });
     //Auth
-    Route::post('login', 'AuthController@authenticate');
+    Route::post('authenticate', 'AuthController@authenticate');
 });
