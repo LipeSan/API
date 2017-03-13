@@ -11,6 +11,21 @@
 |
 */
 
+Route::get('/', function() {
+    return '
+        <p style="font-size: 20px">
+                Api:
+            <b style="color: red;">
+                v1
+            </b><br>
+                Status:
+            <b style="color: green;">
+                connected
+            </b>
+        </p>
+    ';
+});
+
 Route::group(['prefix' => 'api/v1'], function() {
     //Users
     Route::group(['prefix' => 'users'], function () {
