@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT.auth')->only('store', 'update', 'destroy');
+        $this->middleware('JWT.auth')->only('update', 'destroy');
     }
 
     /**
