@@ -3,9 +3,10 @@
 namespace Api\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Api\Repositories\Contracts\UserRepositoryContract;
 use Api\Models\User;
-use Illuminate\Database\QueryException;
+
 
 /**
  * Class UserRepository
@@ -25,7 +26,7 @@ class UserRepository implements UserRepositoryContract
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function findOne($id)
+    public function read($id)
     {
         try {
             return response()->json(['success' => true, 'data' => User::findOrFail($id)], 200);
@@ -44,7 +45,7 @@ class UserRepository implements UserRepositoryContract
         try {
             return response()->json(['success' => true, 'data' => User::create($request->all())], 201);
         } catch (QueryException $error) {
-            return response()->json(['error' => true, 'message' => 'user_not_was_created'], 500);
+            return response()->json(['error' => true, 'message' => 'user not was created'], 500);
         }
     }
 
@@ -59,9 +60,9 @@ class UserRepository implements UserRepositoryContract
         try {
             $user = User::findOrFail($id);
             $user->update($request->all());
-            return response()->json(['success' => true, 'data' => $user], 200);
+            return response()->json(204);
         } catch (ModelNotFoundException $error) {
-            return response()->json(['error' => true, 'message' => 'user_not_found'], 404);
+            return response()->json(['error' => true, 'message' => 'user not found'], 404);
         }
 
     }
@@ -73,10 +74,11 @@ class UserRepository implements UserRepositoryContract
     public function delete($id)
     {
         try {
-            $user = User::findOrFail($id)->delete();
-            return response()->json(['success' => true, 'data' => $user], 200);
+            $user = User::findOrFail($id);
+            $user->delete();
+            return response()->json(204);
         } catch (ModelNotFoundException $error) {
-            return response()->json(['error' => true, 'message' => 'user_not_removed'], 401);
+            return response()->json(['error' => true, 'message' => 'user not removed'], 404);
         }
     }
 }
