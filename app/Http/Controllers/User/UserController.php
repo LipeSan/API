@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return UserRepository::findOne($id);
+        return UserRepository::read($id);
     }
 
     /**
