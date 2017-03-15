@@ -37,7 +37,7 @@ class UserRepository implements UserRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                'message' => 'user_not_found']
+                'message' => 'user not found']
             ], 404);
         }
     }
