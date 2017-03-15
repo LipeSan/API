@@ -25,16 +25,3 @@ Route::get('/', function() {
         </p>
     ';
 });
-
-Route::group(['prefix' => 'api/v1'], function() {
-    //Users
-    Route::group(['prefix' => 'users'], function () {
-        Route::get(null, 'User\UserController@index');
-        Route::get('{id}', 'User\UserController@show');
-        Route::post(null, 'User\UserController@store');
-        Route::put('{id}', 'User\UserController@update');
-        Route::delete('{id}', 'User\UserController@destroy');
-    });
-    //Auth
-    Route::post('authenticate', 'Auth\AuthController@authenticate');
-});
