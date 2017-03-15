@@ -29,9 +29,16 @@ class UserRepository implements UserRepositoryContract
     public function read($id)
     {
         try {
-            return response()->json(['success' => true, 'data' => User::findOrFail($id)], 200);
+            return response()->json([
+                'result' => [
+                    'status' => 200,
+                    'data' => User::findOrFail($id)]
+            ], 200);
         } catch (ModelNotFoundException $error) {
-            return response()->json(['error' => true, 'message' => 'user_not_found'], 404);
+            return response()->json([
+                'error' => [
+                'message' => 'user_not_found']
+            ], 404);
         }
     }
 
@@ -43,9 +50,19 @@ class UserRepository implements UserRepositoryContract
     {
         $request['password'] = bcrypt($request->password);
         try {
-            return response()->json(['success' => true, 'data' => User::create($request->all())], 201);
+            return response()->json([
+                'result' => [
+                    'status' => 201,
+                    'data' => User::create($request->all())
+                ]
+            ], 201);
         } catch (QueryException $error) {
-            return response()->json(['error' => true, 'message' => 'user not was created'], 500);
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => 'user not was created'
+                ]
+            ], 500);
         }
     }
 
@@ -62,7 +79,12 @@ class UserRepository implements UserRepositoryContract
             $user->update($request->all());
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
-            return response()->json(['error' => true, 'message' => 'user not found'], 404);
+            return response()->json([
+                'error' => [
+                    'status' => 404,
+                    'message' => 'user not found'
+                ]
+            ], 404);
         }
 
     }
@@ -78,7 +100,12 @@ class UserRepository implements UserRepositoryContract
             $user->delete();
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
-            return response()->json(['error' => true, 'message' => 'user not removed'], 404);
+            return response()->json([
+                'error' => [
+                    'status' => 204,
+                    'message' => 'user not removed'
+                ]
+            ], 404);
         }
     }
 }

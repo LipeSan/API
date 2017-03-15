@@ -14,20 +14,34 @@ class AuthController extends Controller
     {
     	$credentials = $request->only('email', 'password');
     	try {
-            if(!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => true, 'message' => 'invalid credentials'], 401);
+            $token = JWTAuth::attempt($credentials);
+
+            if(!$token) {
+                return response()->json([
+                    'error' => [
+                        'status' => 401,
+                        'message' => 'invalid credentials'
+                    ]
+                ], 401);
             }
     	} catch(JWTException $error) {
-    		return response()->json(['error' => true, 'message' => 'could not create token'], 500);
+    		return response()->json([
+    		    'error' => [
+                    'status' => 500,
+    		        'message' => 'could not create token'
+                ]
+            ], 500);
     	}
 
         $user = JWTAuth::toUser($token);
 
     	return response()->json([
-    	    'success' => true,
-    	    'access_token' => $token,
-            'token_type' => 'bearer',
-            'data' => $user
-        ]);
+    	    'result' => [
+                'status' => 200,
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'profile' => $user
+            ]
+        ], 200);
     }
 }
