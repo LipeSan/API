@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1'], function() {
     //Users
-    Route::group(['prefix' => 'users'], function () {
+    Route::group(['prefix' => 'users', 'middleware' => 'cors'], function () {
         Route::get(null, 'User\UserController@index');
         Route::get('{id}', 'User\UserController@show');
         Route::post(null, 'User\UserController@store');
