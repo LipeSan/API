@@ -23,5 +23,5 @@ Route::group(['prefix' => 'v1'], function() {
         Route::delete('{id}', 'User\UserController@destroy');
     });
     //Auth
-    Route::post('authenticate', 'Auth\AuthController@authorize');
+    Route::post('authorize', 'Auth\AuthController@authenticate');
 });
