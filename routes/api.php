@@ -24,7 +24,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('work/{id}', 'User\UserController@getUserByWork');
     });
     //Works
-    Route::group(['prefix' => 'works', 'middleware' => ['cors', 'jwt.auth']], function () {
+    Route::group(['prefix' => 'works', 'middleware' => ['cors', 'JWT.auth']], function () {
         Route::get(null, 'Work\WorkController@index');
         Route::get('{id}', 'Work\WorkController@show');
         Route::post(null, 'Work\WorkController@store');

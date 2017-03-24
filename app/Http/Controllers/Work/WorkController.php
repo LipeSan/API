@@ -2,7 +2,6 @@
 
 namespace Api\Http\Controllers\Work;
 
-use Api\Models\Work;
 use Api\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Facades\Api\Repositories\WorkRepository;
