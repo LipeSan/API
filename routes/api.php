@@ -21,6 +21,16 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post(null, 'User\UserController@store');
         Route::put('{id}', 'User\UserController@update');
         Route::delete('{id}', 'User\UserController@destroy');
+        Route::get('work/{id}', 'User\UserController@getUserByWork');
+    });
+    //Works
+    Route::group(['prefix' => 'works', 'middleware' => ['cors', 'jwt.auth']], function () {
+        Route::get(null, 'Work\WorkController@index');
+        Route::get('{id}', 'Work\WorkController@show');
+        Route::post(null, 'Work\WorkController@store');
+        Route::put('{id}', 'Work\WorkController@update');
+        Route::delete('{id}', 'Work\WorkController@destroy');
+        Route::get('user/{id}', 'Work\WorkController@getWorksByUser');
     });
     //Auth
     Route::post('authorize', 'Auth\AuthController@authenticate');

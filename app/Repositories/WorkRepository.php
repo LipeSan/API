@@ -4,16 +4,21 @@ namespace Api\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Api\Repositories\Contracts\UserRepositoryContract;
-use Api\Models\User;
+use Api\Repositories\Contracts\WorkRepositoryContract;
 use Api\Models\Work;
+use Api\Models\User;
 
 /**
- * Class UserRepository
+ * Class WorkRepository
  * @package Api\Repositories
  */
-class UserRepository implements UserRepositoryContract
+class WorkRepository implements WorkRepositoryContract
 {
+    public function __construct()
+    {
+//        $this->middleware('JWT.auth')->only('index', 'create', 'update', 'destroy');
+    }
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
@@ -22,7 +27,7 @@ class UserRepository implements UserRepositoryContract
         return response()->json([
             'result' => [
                 'status' => 200,
-                'data' => User::orderBy('name', 'asc')->get()
+                'data' => Work::orderBy('name', 'asc')->get()
             ]
         ], 200);
     }
@@ -37,12 +42,12 @@ class UserRepository implements UserRepositoryContract
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => User::findOrFail($id)]
+                    'data' => Work::findOrFail($id)]
             ], 200);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                'message' => 'user not found']
+                    'message' => 'user not found']
             ], 404);
         }
     }
@@ -53,12 +58,11 @@ class UserRepository implements UserRepositoryContract
      */
     public function create($request)
     {
-        $request['password'] = bcrypt($request->password);
         try {
             return response()->json([
                 'result' => [
                     'status' => 201,
-                    'data' => User::create($request->all())
+                    'data' => Work::create($request->all())
                 ]
             ], 201);
         } catch (QueryException $error) {
@@ -78,16 +82,15 @@ class UserRepository implements UserRepositoryContract
      */
     public function update($id, $request)
     {
-        $request['password'] = bcrypt($request->password);
         try {
-            $user = User::findOrFail($id);
+            $user = Work::findOrFail($id);
             $user->update($request->all());
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
                     'status' => 404,
-                    'message' => 'user not found'
+                    'message' => 'work not found'
                 ]
             ], 404);
         }
@@ -101,13 +104,13 @@ class UserRepository implements UserRepositoryContract
     public function delete($id)
     {
         try {
-            User::destroy(explode(',', $id));
+            Work::destroy(explode(',', $id));
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
                     'status' => 204,
-                    'message' => 'user not removed'
+                    'message' => 'work not removed'
                 ]
             ], 404);
         }
@@ -117,20 +120,20 @@ class UserRepository implements UserRepositoryContract
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUserByWork($id)
+    public function getWorksByUser($id)
     {
         try {
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => Work::find($id)->user
+                    'data' => User::find($id)->works
                 ]
             ], 201);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
                     'status' => 401,
-                    'message' => 'user not found'
+                    'message' => 'work not found'
                 ]
             ], 404);
         }

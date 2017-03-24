@@ -4,7 +4,12 @@ namespace Api\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
+/**
+ * Class User
+ * @package Api\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -24,6 +29,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at',
+        'password',
     ];
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getcreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y');
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function works()
+    {
+        return $this->hasMany(\Api\Models\Work::class);
+    }
 }

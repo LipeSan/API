@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT.auth')->only('update', 'destroy');
+        $this->middleware('JWT.auth')->only('update', 'destroy', 'getUserByWork');
     }
 
     /**
@@ -63,5 +63,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         return UserRepository::delete($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getUserByWork($id)
+    {
+        return UserRepository::getUserByWork($id);
     }
 }
