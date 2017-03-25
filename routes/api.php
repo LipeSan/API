@@ -21,16 +21,16 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post(null, 'User\UserController@store');
         Route::put('{id}', 'User\UserController@update');
         Route::delete('{id}', 'User\UserController@destroy');
-        Route::get('work/{id}', 'User\UserController@getUserByWork');
+        Route::get('construction/{id}', 'User\UserController@getUserByConstruction');
     });
     //Works
-    Route::group(['prefix' => 'works', 'middleware' => ['cors', 'JWT.auth']], function () {
-        Route::get(null, 'Work\WorkController@index');
-        Route::get('{id}', 'Work\WorkController@show');
-        Route::post(null, 'Work\WorkController@store');
-        Route::put('{id}', 'Work\WorkController@update');
-        Route::delete('{id}', 'Work\WorkController@destroy');
-        Route::get('user/{id}', 'Work\WorkController@getWorksByUser');
+    Route::group(['prefix' => 'constructions', 'middleware' => ['cors'/*, 'JWT.auth'*/]], function () {
+        Route::get(null, 'Construction\ConstructionController@index');
+        Route::get('{id}', 'Construction\ConstructionController@show');
+        Route::post(null, 'Construction\ConstructionController@store');
+        Route::put('{id}', 'Construction\ConstructionController@update');
+        Route::delete('{id}', 'Construction\ConstructionController@destroy');
+        Route::get('user/{id}', 'Construction\ConstructionController@getConstructionsByUser');
     });
     //Auth
     Route::post('authorize', 'Auth\AuthController@authenticate');

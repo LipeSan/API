@@ -1,12 +1,12 @@
 <?php
 
-namespace Api\Http\Controllers\Work;
+namespace Api\Http\Controllers\Construction;
 
 use Api\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Facades\Api\Repositories\WorkRepository;
+use Facades\Api\Repositories\ConstructionRepository;
 
-class WorkController extends Controller
+class ConstructionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class WorkController extends Controller
      */
     public function index()
     {
-        return WorkRepository::getAll();
+        return ConstructionRepository::getAll();
     }
 
     /**
@@ -26,49 +26,49 @@ class WorkController extends Controller
      */
     public function store(Request $request)
     {
-        return WorkRepository::create($request);
+        return ConstructionRepository::create($request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \Api\Work  $work
+     * @param  \Api\Construction  $Construction
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return WorkRepository::read($id);
+        return ConstructionRepository::read($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Api\Work  $work
+     * @param  \Api\Construction  $Construction
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
     {
-        return WorkRepository::update($id, $request);
+        return ConstructionRepository::update($id, $request);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Api\Work  $work
+     * @param  \Api\Construction  $Construction
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        return WorkRepository::delete($id);
+        return ConstructionRepository::delete($id);
     }
 
     /**
      * @param $id
      * @return mixed
      */
-    public function getWorksByUser($id)
+    public function getConstructionsByUser($id)
     {
-        return WorkRepository::getWorksByUser($id);
+        return ConstructionRepository::getConstructionsByUser($id);
     }
 }

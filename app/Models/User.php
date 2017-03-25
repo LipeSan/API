@@ -53,8 +53,8 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function works()
+    public function constructions()
     {
-        return $this->hasMany(\Api\Models\Work::class);
+        return $this->hasMany(\Api\Models\Construction::class);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Api\Repositories\Contracts\UserRepositoryContract;
 use Api\Models\User;
-use Api\Models\Work;
+use Api\Models\Construction;
 
 /**
  * Class UserRepository
@@ -117,13 +117,13 @@ class UserRepository implements UserRepositoryContract
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUserByWork($id)
+    public function getUserByConstruction($id)
     {
         try {
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => Work::find($id)->user
+                    'data' => Construction::find($id)->user
                 ]
             ], 201);
         } catch (ModelNotFoundException $error) {

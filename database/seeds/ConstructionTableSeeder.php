@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class WorkTableSeeder extends Seeder
+class ConstructionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class WorkTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('works')->insert([
+        DB::table('constructions')->insert([
             'user_id' => 1,
             'name' => 'Obra Teste 1',
             'total' => 9888777.50,
@@ -19,7 +19,7 @@ class WorkTableSeeder extends Seeder
             'updated_at' => \Carbon\Carbon::now()
         ]);
 
-        DB::table('works')->insert([
+        DB::table('constructions')->insert([
             'user_id' => 1,
             'name' => 'Obra Teste 2',
             'total' => 455.32,
@@ -27,7 +27,7 @@ class WorkTableSeeder extends Seeder
             'updated_at' => \Carbon\Carbon::now()
         ]);
 
-        DB::table('works')->insert([
+        DB::table('constructions')->insert([
             'user_id' => 1,
             'name' => 'Obra Teste 3',
             'total' => 14000.50,

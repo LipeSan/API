@@ -9,7 +9,7 @@ use Carbon\Carbon;
  * Class Work
  * @package Api\Models
  */
-class Work extends Model
+class Construction extends Model
 {
     /**
      * @var array

@@ -2,7 +2,7 @@
 
 namespace Api\Repositories\Contracts;
 
-interface WorkRepositoryContract
+interface ConstructionRepositoryContract
 {
     public function getAll();
     public function read($id);

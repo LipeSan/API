@@ -4,15 +4,15 @@ namespace Api\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Api\Repositories\Contracts\WorkRepositoryContract;
-use Api\Models\Work;
+use Api\Repositories\Contracts\ConstructionRepositoryContract;
+use Api\Models\Construction;
 use Api\Models\User;
 
 /**
  * Class WorkRepository
  * @package Api\Repositories
  */
-class WorkRepository implements WorkRepositoryContract
+class ConstructionRepository implements ConstructionRepositoryContract
 {
     public function __construct()
     {
@@ -27,7 +27,7 @@ class WorkRepository implements WorkRepositoryContract
         return response()->json([
             'result' => [
                 'status' => 200,
-                'data' => Work::orderBy('name', 'asc')->get()
+                'data' => Construction::orderBy('name', 'asc')->get()
             ]
         ], 200);
     }
@@ -42,7 +42,7 @@ class WorkRepository implements WorkRepositoryContract
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => Work::findOrFail($id)]
+                    'data' => Construction::findOrFail($id)]
             ], 200);
         } catch (ModelNotFoundException $error) {
             return response()->json([
@@ -62,7 +62,7 @@ class WorkRepository implements WorkRepositoryContract
             return response()->json([
                 'result' => [
                     'status' => 201,
-                    'data' => Work::create($request->all())
+                    'data' => Construction::create($request->all())
                 ]
             ], 201);
         } catch (QueryException $error) {
@@ -83,7 +83,7 @@ class WorkRepository implements WorkRepositoryContract
     public function update($id, $request)
     {
         try {
-            $user = Work::findOrFail($id);
+            $user = Construction::findOrFail($id);
             $user->update($request->all());
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
@@ -104,7 +104,7 @@ class WorkRepository implements WorkRepositoryContract
     public function delete($id)
     {
         try {
-            Work::destroy(explode(',', $id));
+            Construction::destroy(explode(',', $id));
             return response()->json(204);
         } catch (ModelNotFoundException $error) {
             return response()->json([
@@ -120,13 +120,13 @@ class WorkRepository implements WorkRepositoryContract
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getWorksByUser($id)
+    public function getConstructionsByUser($id)
     {
         try {
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => User::find($id)->works
+                    'data' => User::find($id)->constructions
                 ]
             ], 201);
         } catch (ModelNotFoundException $error) {
