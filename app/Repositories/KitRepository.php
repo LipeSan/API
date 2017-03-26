@@ -41,7 +41,7 @@ class KitRepository implements KitRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'message' => 'user not found']
+                    'message' => 'kit not found']
             ], 404);
         }
     }
@@ -63,7 +63,7 @@ class KitRepository implements KitRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 500,
-                    'message' => 'user not was created'
+                    'message' => 'kit not was created'
                 ]
             ], 500);
         }
@@ -84,7 +84,7 @@ class KitRepository implements KitRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 404,
-                    'message' => 'work not found'
+                    'message' => 'kit not found'
                 ]
             ], 404);
         }
@@ -104,7 +104,7 @@ class KitRepository implements KitRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 204,
-                    'message' => 'work not removed'
+                    'message' => 'kit not removed'
                 ]
             ], 404);
         }

@@ -50,7 +50,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'message' => 'user not found']
+                    'message' => 'construction not found']
             ], 404);
         }
     }
@@ -72,7 +72,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 500,
-                    'message' => 'user not was created'
+                    'message' => 'construction not was created'
                 ]
             ], 500);
         }
@@ -93,7 +93,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 404,
-                    'message' => 'work not found'
+                    'message' => 'construction not found'
                 ]
             ], 404);
         }
@@ -113,7 +113,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 204,
-                    'message' => 'work not removed'
+                    'message' => 'construction not removed'
                 ]
             ], 404);
         }
@@ -136,7 +136,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
             return response()->json([
                 'error' => [
                     'status' => 401,
-                    'message' => 'work not found'
+                    'message' => 'construction not found'
                 ]
             ], 404);
         }
@@ -237,7 +237,13 @@ class ConstructionRepository implements ConstructionRepositoryContract
             foreach ($kits as $kit) {
                 Construction::findOrFail($kit['construction_id'])
                     ->kits()
-                    ->sync([$kit['kit_id']], ['quantity' => $kit['quantity']]
+                    ->detach();
+            }
+
+            foreach ($kits as $kit) {
+                Construction::findOrFail($kit['construction_id'])
+                    ->kits()
+                    ->attach($kit['kit_id'], ['quantity' => $kit['quantity']]
                     );
             }
             return response()->json([
