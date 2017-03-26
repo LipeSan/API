@@ -240,11 +240,17 @@ class ConstructionRepository implements ConstructionRepositoryContract
                     ->detach();
             }
 
-            foreach ($kits as $kit) {
-                Construction::findOrFail($kit['construction_id'])
-                    ->kits()
-                    ->attach($kit['kit_id'], ['quantity' => $kit['quantity']]
-                    );
+            foreach ($kits as $key => $kit) {
+                if(key_exists('quantity', $kits[$key])) {
+                    Construction::findOrFail($kit['construction_id'])
+                        ->kits()
+                        ->attach($kit['kit_id'], ['quantity' => $kit['quantity']]);
+                } else {
+                    Construction::findOrFail($kit['construction_id'])
+                        ->kits()
+                        ->attach($kit['kit_id']);
+                }
+
             }
             return response()->json([
                 'result' => [
