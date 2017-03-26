@@ -14,6 +14,9 @@ use Api\Models\User;
  */
 class ConstructionRepository implements ConstructionRepositoryContract
 {
+    /**
+     * ConstructionRepository constructor.
+     */
     public function __construct()
     {
 //        $this->middleware('JWT.auth')->only('index', 'create', 'update', 'destroy');
@@ -136,6 +139,119 @@ class ConstructionRepository implements ConstructionRepositoryContract
                     'message' => 'work not found'
                 ]
             ], 404);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getKitsByConstruction($id)
+    {
+        try {
+            return response()->json([
+                'result' => [
+                    'status' => 200,
+                    'data' => Construction::find($id)->kits
+                ]
+            ], 201);
+        } catch (ModelNotFoundException $error) {
+            return response()->json([
+                'error' => [
+                    'status' => 401,
+                    'message' => 'Construction not found'
+                ]
+            ], 404);
+        }
+    }
+
+    /**
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addKit($request)
+    {
+        $kits = $request->all();
+
+        try {
+            foreach ($kits as $kit) {
+                Construction::findOrFail($kit['construction_id'])
+                    ->kits()
+                    ->attach($kit['kit_id'], ['quantity' => $kit['quantity']]
+                );
+            }
+
+            return response()->json([
+                'result' => [
+                    'status' => 201,
+                ]
+            ], 201);
+        } catch (QueryException $error) {
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => 'not associated kit'
+                ]
+            ], 500);
+        }
+    }
+
+    /**
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeKit($request)
+    {
+        $kits = $request->all();
+
+        try {
+            Construction::findOrFail($kits['construction_id'])
+                ->kits()
+                ->detach($kits['kit_id']
+                );
+
+            return response()->json([
+                'result' => [
+                    'status' => 201
+                ]
+            ], 201);
+        } catch (QueryException $error) {
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => 'associate kit not removed'
+                ]
+            ], 500);
+        }
+    }
+
+    /**
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function synckits($request)
+    {
+        $kits = $request->all();
+
+        try {
+            foreach ($kits as $kit) {
+                Construction::findOrFail($kit['construction_id'])
+                    ->kits()
+                    ->sync([$kit['kit_id']], ['quantity' => $kit['quantity']]
+                    );
+            }
+            return response()->json([
+                'result' => [
+                    'status' => 201,
+                ]
+            ], 201);
+        } catch (QueryException $error) {
+            return response()->json([
+                'error' => [
+                    'status' => 500,
+                    'message' => 'associate kits not sincronized'
+                ]
+            ], 500);
         }
     }
 }

@@ -6,6 +6,10 @@ use Api\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Facades\Api\Repositories\ConstructionRepository;
 
+/**
+ * Class ConstructionController
+ * @package Api\Http\Controllers\Construction
+ */
 class ConstructionController extends Controller
 {
     /**
@@ -70,5 +74,41 @@ class ConstructionController extends Controller
     public function getConstructionsByUser($id)
     {
         return ConstructionRepository::getConstructionsByUser($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getKitsByConstruction($id)
+    {
+        return ConstructionRepository::getKitsByConstruction($id);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function addKit(Request $request)
+    {
+        return ConstructionRepository::addKit($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function removeKit(Request $request)
+    {
+        return ConstructionRepository::removeKit($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function syncKits(Request $request)
+    {
+        return ConstructionRepository::syncKits($request);
     }
 }

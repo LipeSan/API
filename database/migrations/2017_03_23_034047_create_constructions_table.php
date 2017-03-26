@@ -22,8 +22,7 @@ class CreateConstructionsTable extends Migration
                   ->onDelete('cascade');;
             $table->string('name', 255);
             $table->string('image', 255)->default('construction_default.jpg');
-            $table->float('total', 9, 2);
-            $table->timestamps();
+            $table->float('total', 8, 2);
         });
     }
 

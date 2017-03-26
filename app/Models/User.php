@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,24 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    public function getcreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -12,6 +12,10 @@ use Carbon\Carbon;
 class Construction extends Model
 {
     /**
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
      * @var array
      */
     protected $fillable = [
@@ -28,28 +32,18 @@ class Construction extends Model
     }
 
     /**
-     * @param $value
-     * @return string
-     */
-    public function getcreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
-
-    /**
-     * @param $value
-     * @return string
-     */
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsTo(\Api\Models\User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return $this
+     */
+    public function kits()
+    {
+        return $this->belongsToMany(Kit::class)->withPivot('quantity');
     }
 }
