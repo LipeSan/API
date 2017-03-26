@@ -46,5 +46,5 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('{id}/constructions', 'Kit\KitController@getConstructionsByKit');
     });
     //Auth
-    Route::post('authorize', ['middleware' => 'cors'], 'Auth\AuthController@authenticate');
+    Route::post('authorize', 'Auth\AuthController@authenticate');
 });
