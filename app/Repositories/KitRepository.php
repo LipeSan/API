@@ -62,10 +62,10 @@ class KitRepository implements KitRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'kit not was created'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 
@@ -83,10 +83,10 @@ class KitRepository implements KitRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 404,
+                    'status' => 400,
                     'message' => 'kit not found'
                 ]
-            ], 404);
+            ], 400);
         }
 
     }
@@ -103,10 +103,10 @@ class KitRepository implements KitRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 204,
+                    'status' => 400,
                     'message' => 'kit not removed'
                 ]
-            ], 404);
+            ], 400);
         }
     }
 
@@ -122,14 +122,14 @@ class KitRepository implements KitRepositoryContract
                     'status' => 200,
                     'data' => Kit::find($id)->constructions
                 ]
-            ], 201);
+            ], 200);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 401,
+                    'status' => 400,
                     'message' => 'Kit not found'
                 ]
-            ], 404);
+            ], 400);
         }
     }
 }

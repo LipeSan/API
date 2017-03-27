@@ -71,10 +71,10 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'construction not was created'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 
@@ -112,10 +112,10 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 204,
+                    'status' => 400,
                     'message' => 'construction not removed'
                 ]
-            ], 404);
+            ], 400);
         }
     }
 
@@ -135,7 +135,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 401,
+                    'status' => 404,
                     'message' => 'construction not found'
                 ]
             ], 404);
@@ -158,7 +158,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 401,
+                    'status' => 404,
                     'message' => 'Construction not found'
                 ]
             ], 404);
@@ -189,10 +189,10 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'not associated kit'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 
@@ -218,10 +218,10 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'associate kit not removed'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 
@@ -260,10 +260,10 @@ class ConstructionRepository implements ConstructionRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'associate kits not sincronized'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 }

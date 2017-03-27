@@ -64,10 +64,10 @@ class UserRepository implements UserRepositoryContract
         } catch (QueryException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 500,
+                    'status' => 400,
                     'message' => 'user not was created'
                 ]
-            ], 500);
+            ], 400);
         }
     }
 
@@ -106,10 +106,10 @@ class UserRepository implements UserRepositoryContract
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 204,
+                    'status' => 400,
                     'message' => 'user not removed'
                 ]
-            ], 404);
+            ], 400);
         }
     }
 
@@ -125,14 +125,14 @@ class UserRepository implements UserRepositoryContract
                     'status' => 200,
                     'data' => Construction::find($id)->user
                 ]
-            ], 201);
+            ], 200);
         } catch (ModelNotFoundException $error) {
             return response()->json([
                 'error' => [
-                    'status' => 401,
+                    'status' => 400,
                     'message' => 'user not found'
                 ]
-            ], 404);
+            ], 400);
         }
     }
 }
