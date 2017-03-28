@@ -174,11 +174,14 @@ class ConstructionRepository implements ConstructionRepositoryContract
         $kits = $request->all();
 
         try {
-            foreach ($kits as $kit) {
-                Construction::findOrFail($kit['construction_id'])
+            if(key_exists('quantity', $kits)) {
+                Construction::findOrFail($kits['construction_id'])
                     ->kits()
-                    ->attach($kit['kit_id'], ['quantity' => $kit['quantity']]
-                );
+                    ->attach($kits['kit_id'], ['quantity' => $kits['quantity']]);
+            } else {
+                Construction::findOrFail($kits['construction_id'])
+                    ->kits()
+                    ->attach($kits['kit_id']);
             }
 
             return response()->json([
@@ -186,7 +189,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
                     'status' => 201,
                 ]
             ], 201);
-        } catch (QueryException $error) {
+        } catch (\ErrorException $error) {
             return response()->json([
                 'error' => [
                     'status' => 400,
@@ -215,7 +218,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
                     'status' => 201
                 ]
             ], 201);
-        } catch (QueryException $error) {
+        } catch (\ErrorException $error) {
             return response()->json([
                 'error' => [
                     'status' => 400,
@@ -234,7 +237,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
         $kits = $request->all();
 
         try {
-            foreach ($kits as $kit) {
+            foreach ($kits as $key => $kit) {
                 Construction::findOrFail($kit['construction_id'])
                     ->kits()
                     ->detach();
@@ -257,7 +260,7 @@ class ConstructionRepository implements ConstructionRepositoryContract
                     'status' => 201,
                 ]
             ], 201);
-        } catch (QueryException $error) {
+        } catch (\ErrorException $error) {
             return response()->json([
                 'error' => [
                     'status' => 400,
