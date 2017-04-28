@@ -47,4 +47,5 @@ Route::group(['prefix' => 'v1'], function() {
     });
     //Auth
     Route::post('authorize', 'Auth\AuthController@authenticate');
+    Route::post('refresh', 'Auth\AuthController@refreshToken');
 });

@@ -44,4 +44,31 @@ class AuthController extends Controller
             ]
         ], 200);
     }
+
+    public function refreshToken(Request $request)
+    {
+        if(!$token = $request->token) {
+            return response()->json([
+                'result' => [
+                    'status' => 401,
+                    'errors' => 'token not sended',
+                ]
+            ], 401);
+        }
+        try {
+            return response()->json([
+                'result' => [
+                    'status' => 200,
+                    'token' => JWTAuth::refresh($token),
+                ]
+            ], 401);
+        } catch(JWTException $error) {
+            return response()->json([
+                'result' => [
+                    'status' => 401,
+                    'errors' => $error->getMessage(),
+                ]
+            ], 401);
+        }
+    }
 }
