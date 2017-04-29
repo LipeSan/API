@@ -132,11 +132,17 @@ class ConstructionRepository implements ConstructionRepositoryContract
      */
     public function getConstructionsByUser($id)
     {
+        $constructions = User::find($id)->constructions;
+
+        foreach ($constructions as $index => $construction) {
+            $constructions[$index]['totalKit'] = DB::table('construction_kit')->where('construction_id', '=', $construction->id)->get()->count();
+        }
+
         try {
             return response()->json([
                 'result' => [
                     'status' => 200,
-                    'data' => User::find($id)->constructions
+                    'data' => $constructions
                 ]
             ], 201);
         } catch (ModelNotFoundException $error) {
