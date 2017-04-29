@@ -30,19 +30,14 @@ class ConstructionRepository implements ConstructionRepositoryContract
     {
         $constructions = Construction::orderBy('name', 'asc')->get();
 
-        $list = [];
         foreach ($constructions as $index => $construction) {
-            $list['id'] = $construction->id;
-            $list['user_id'] = $construction->user_id;
-            $list['image'] = $construction->image;
-            $list['total'] = $construction->total;
-            $list['totalKits'] = DB::table('construction_kit')->where('construction_id', '=', $construction->id)->get()->count();
+            $constructions[$index]['totalKit'] = DB::table('construction_kit')->where('construction_id', '=', $construction->id)->get()->count();
         }
 
         return response()->json([
             'result' => [
                 'status' => 200,
-                'data' => $list
+                'data' => $constructions
             ]
         ], 200);
     }
