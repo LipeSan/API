@@ -7,6 +7,7 @@ use Illuminate\Database\QueryException;
 use Api\Repositories\Contracts\ConstructionRepositoryContract;
 use Api\Models\Construction;
 use Api\Models\User;
+use DB;
 
 /**
  * Class WorkRepository
@@ -27,10 +28,21 @@ class ConstructionRepository implements ConstructionRepositoryContract
      */
     public function getAll()
     {
+        $constructions = Construction::orderBy('name', 'asc')->get();
+
+        $list = [];
+        foreach ($constructions as $index => $construction) {
+            $list['id'] = $construction->id;
+            $list['user_id'] = $construction->user_id;
+            $list['image'] = $construction->image;
+            $list['total'] = $construction->total;
+            $list['totalKits'] = DB::table('construction_kit')->where('construction_id', '=', $construction->id)->get()->count();
+        }
+
         return response()->json([
             'result' => [
                 'status' => 200,
-                'data' => Construction::orderBy('name', 'asc')->get()
+                'data' => $list
             ]
         ], 200);
     }
