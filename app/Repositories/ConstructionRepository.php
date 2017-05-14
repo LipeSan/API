@@ -42,6 +42,22 @@ class ConstructionRepository implements ConstructionRepositoryContract
         ], 200);
     }
 
+    public function getPagination($limit)
+    {
+        $constructions = Construction::paginate($limit);
+
+        foreach ($constructions as $index => $construction) {
+            $constructions[$index]['totalKit'] = DB::table('construction_kit')->where('construction_id', '=', $construction->id)->get()->count();
+        }
+
+        return response()->json([
+            'result' => [
+                'status' => 200,
+                'data' => $constructions
+            ]
+        ], 200);
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse

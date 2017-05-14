@@ -22,6 +22,11 @@ class ConstructionController extends Controller
         return ConstructionRepository::getAll();
     }
 
+    public function pagination($limit = 20)
+    {
+        return ConstructionRepository::getPagination($limit);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
