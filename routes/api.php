@@ -26,7 +26,7 @@ Route::group(['prefix' => 'v1'], function() {
     //Works
     Route::group(['prefix' => 'constructions', 'middleware' => ['cors', 'JWT.auth']], function () {
         Route::get(null, 'Construction\ConstructionController@index');
-        Route::get('pagination/{limit}', 'Construction\ConstructionController@pagination');
+        Route::get('pagination/{limit?}', 'Construction\ConstructionController@pagination');
         Route::get('{id}', 'Construction\ConstructionController@show');
         Route::post(null, 'Construction\ConstructionController@store');
         Route::put('{id}', 'Construction\ConstructionController@update');
